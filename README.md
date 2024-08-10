@@ -19,7 +19,7 @@ To get this project started:
 1. Clone the repository
 1. Install dependencies running `bundle install`. You might need to install or upgrade the `bundler` gem
 1. Create and seed the DB (`rails db:migrate` and `rails db:seed`). This will allow you to set up the server and test the functionalities
-1. The included file called `` is a collection of Postman requests that you can use to verify the functionalities. Make sure to first use the `login` request and use the obtained JWT token on the Authorization header for all other requests.
+1. The included file called `CRM Backend.postman_collection.json` is a collection of Postman requests that you can use to verify the functionalities. Make sure to first use the `login` request and use the obtained JWT token on the Authorization header for all other requests.
 
 ## Functionalities
 
@@ -56,4 +56,3 @@ To contribute:
 1. Create a new PR from your branch into `main`
 
 When the PR is approved and the branch has been merged, the changes will be automatically deployed.
-
