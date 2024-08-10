@@ -8,10 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create(name: "Jorge",   email: "jorge@mata.cr",   role: "admin")
-User.create(name: "Marilyn", email: "marilyn@mata.cr", role: "admin")
-User.create(name: "Anibal",  email: "anibal@mata.cr",  role: "basic")
-User.create(name: "Amanda",  email: "amanda@mata.cr",  role: "basic")
+User.create(name: "Jorge",   email: "jorge@mata.cr",   role: "admin", password: "password123")
+User.create(name: "Marilyn", email: "marilyn@mata.cr", role: "admin", password: "password123")
+User.create(name: "Anibal",  email: "anibal@mata.cr",  role: "basic", password: "password123")
+User.create(name: "Amanda",  email: "amanda@mata.cr",  role: "basic", password: "password123")
 
 Customer.create(name: "Auri",    surname: "Buendia", cx_id: "0305171", photo_url: "https://robohash.org/auri")
 Customer.create(name: "Suliko",  surname: "Rey",     cx_id: "0305172", photo_url: "https://robohash.org/suliko")

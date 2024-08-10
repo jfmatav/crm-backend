@@ -16,6 +16,8 @@ class CustomersController < ApplicationController
   # POST /customers
   def create
     @customer = Customer.new(customer_params)
+    @customer.created_by_id = current_user.id
+    @customer.updated_by_id = current_user.id
 
     if @customer.save
       render json: @customer, status: :created, location: @customer
@@ -26,6 +28,7 @@ class CustomersController < ApplicationController
 
   # PATCH/PUT /customers/1
   def update
+    @customer.updated_by_id = current_user.id
     if @customer.update(customer_params)
       render json: @customer
     else
