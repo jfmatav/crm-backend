@@ -49,6 +49,8 @@ Tests for this project have been written to use `rspec`. Additionally, the `simp
 
 ## CI/CD
 
+IMPORTANT: THE CI/CD PIPELINE IS NOT TESTED AS IT REQUIRES A WORKING AWS ACCOUNT+INSTANCES, WHICH FALL OUT OF THE SCOPE OF THE PROJECT
+
 To contribute:
 
 1. Branch off `main`

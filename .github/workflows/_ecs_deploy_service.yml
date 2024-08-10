@@ -1,0 +1,73 @@
+name: ECS Deploy Service
+
+on:
+  workflow_call:
+    inputs:
+      aws-region:
+        default: us-east-1
+        required: false
+        type: string
+      ecs-cluster:
+        required: true
+        type: string
+      ecs-container-name:
+        required: true
+        type: string
+      ecs-image:
+        required: true
+        type: string
+      ecs-service:
+        required: true
+        type: string
+      ecs-task-definition:
+        required: true
+        type: string
+      timeout:
+        default: 30
+        required: false
+        type: number
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key-id }}
+          aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
+          aws-region: ${{ inputs.aws-region }}
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition ${{ inputs.ecs-task-definition }} --query taskDefinition > ${{ inputs.ecs-task-definition }}.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ inputs.ecs-task-definition }}.json
+          container-name: ${{ inputs.ecs-container-name }}
+          image: ${{ inputs.ecs-image }}
+
+      - name: Deploy Amazon ECS task definition
+        id: svc-deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ inputs.ecs-service }}
+          cluster: ${{ inputs.ecs-cluster }}
+          wait-for-service-stability: true
+
+      - name: Check deployment status
+        run: |
+          TASK_ARN=$(aws ecs describe-services --cluster ${{ inputs.ecs-cluster }} --service ${{ inputs.ecs-service }} --query "services[0].taskDefinition" --output text)
+          echo "Expected ARN: ${{ steps.svc-deploy.outputs.task-definition-arn }}"
+          echo "Actual ARN: $TASK_ARN"
+          if [ "$TASK_ARN" != "${{ steps.svc-deploy.outputs.task-definition-arn }}" ]; then echo "::error::ECS service (${{ inputs.ecs-service }}) was rolled back!"; exit 2; fi

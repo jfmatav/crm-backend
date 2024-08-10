@@ -1,0 +1,77 @@
+name: ECS Build Image
+
+on:
+  workflow_call:
+    inputs:
+      aws-region:
+        default: us-east-1
+        required: false
+        type: string
+      development-build:
+        default: false
+        required: false
+        type: boolean
+      ecr-repository:
+        required: true
+        type: string
+      rails-env:
+        default: development
+        required: false
+        type: string
+      timeout:
+        default: 30
+        required: false
+        type: number
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
+      rails-master-key:
+        required: true
+      sidekiq-enterprise-key:
+        required: false
+    outputs:
+      image:
+        value: ${{ jobs.build.outputs.image }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key-id }}
+          aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
+          aws-region: ${{ inputs.aws-region }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          DEVELOPMENT_BUILD: ${{ inputs.development-build }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ inputs.ecr-repository }}
+          IMAGE_TAG: ${{ github.sha }}
+          RAILS_ENV: ${{ inputs.rails-env }}
+          RAILS_MASTER_KEY: ${{ secrets.rails-master-key }}
+          BUNDLE_ENTERPRISE__CONTRIBSYS__COM: ${{ secrets.sidekiq-enterprise-key }}
+        run: |
+          docker build -f Dockerfile.ecs \
+            --build-arg DEVELOPMENT_BUILD=$DEVELOPMENT_BUILD \
+            --build-arg RAILS_ENV=$RAILS_ENV \
+            --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY \
+            --build-arg BUNDLE_ENTERPRISE__CONTRIBSYS__COM=$BUNDLE_ENTERPRISE__CONTRIBSYS__COM \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+    outputs:
+      image: ${{ steps.build-image.outputs.image }}

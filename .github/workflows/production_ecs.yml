@@ -1,0 +1,55 @@
+name: Deploy ECS (production)
+run-name: ${{ github.actor }} is deploying to PRODUCTION
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Image
+    uses: ./.github/workflows/_ecs_build_image.yml
+    with:
+      development-build: false
+      ecr-repository: crm-api-prod
+      rails-env: production
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      rails-master-key: ${{ secrets.RAILS_MASTER_KEY }}
+
+  migrate:
+    name: Migrate Database
+    uses: ./.github/workflows/_ecs_migrate_database.yml
+    with:
+      ecs-cluster: crm-prod
+      ecs-container-name: app
+      ecs-image: ${{ needs.build.outputs.image }}
+      ecs-service: crm-api-prod
+      ecs-task-definition: crm-api-prod-migrate
+      max-wait-attempts: 300 # * 6s = 30m
+      # vpc-security-group-ids: 
+      # vpc-subnet-ids: 
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    needs: [build]
+
+  deploy_api:
+    name: Deploy API
+    uses: ./.github/workflows/_ecs_deploy_service.yml
+    with:
+      ecs-cluster: crm-prod
+      ecs-container-name: app
+      ecs-image: ${{ needs.build.outputs.image }}
+      ecs-service: crm-api-prod
+      ecs-task-definition: crm-api-prod
+    secrets:
+      aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    needs: [build, migrate]

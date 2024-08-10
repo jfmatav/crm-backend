@@ -1,0 +1,101 @@
+name: ECS Migrate Database
+
+on:
+  workflow_call:
+    inputs:
+      aws-region:
+        default: us-east-1
+        required: false
+        type: string
+      ecs-cluster:
+        required: true
+        type: string
+      ecs-container-name:
+        required: true
+        type: string
+      ecs-image:
+        required: true
+        type: string
+      ecs-service:
+        required: true
+        type: string
+      ecs-task-definition:
+        required: true
+        type: string
+      max-wait-attempts:
+        default: 100 # 100 * 6s = 600s
+        required: false
+        type: number
+      migration-command:
+        default: "bundle exec rails db:migrate"
+        required: false
+        type: string
+      timeout:
+        default: 30
+        required: false
+        type: number
+      vpc-security-group-ids:
+        required: true
+        type: string
+      vpc-subnet-ids:
+        required: true
+        type: string
+    secrets:
+      aws-access-key-id:
+        required: true
+      aws-secret-access-key:
+        required: true
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout }}
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key-id }}
+          aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
+          aws-region: ${{ inputs.aws-region }}
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition ${{ inputs.ecs-task-definition }} --query taskDefinition > ${{ inputs.ecs-task-definition }}.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ inputs.ecs-task-definition }}.json
+          container-name: ${{ inputs.ecs-container-name }}
+          image: ${{ inputs.ecs-image }}
+
+      - name: Deploy Amazon ECS task definition
+        id: svc-deploy
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+
+      - name: Run migrations
+        id: run-task
+        uses: geekcell/github-action-aws-ecs-run-task@v3.1.0
+        with:
+          cluster: ${{ inputs.ecs-cluster }}
+          task-definition: ${{ inputs.ecs-task-definition }}
+          assign-public-ip: 'DISABLED'
+          subnet-ids: ${{ inputs.vpc-subnet-ids }}
+          security-group-ids: ${{ inputs.vpc-security-group-ids }}
+          tail-logs: true
+          override-container: ${{ inputs.ecs-container-name }}
+          override-container-command: |
+            /bin/sh
+            -c
+            echo "Running migrations.." && \
+            ${{ inputs.migration-command }} && \
+            echo "Finished migrations"
+          task-stopped-wait-for-max-attempts: ${{ inputs.max-wait-attempts }}
+
+      - name: Check migration status
+        run: |
+          EXIT_CODE=$(aws ecs describe-tasks --cluster ${{ inputs.ecs-cluster }} --tasks ${{ steps.run-task.outputs.task-arn }} --query "tasks[0].containers[?name=='${{ inputs.ecs-container-name }}'].exitCode" --output text)
+          if [ $EXIT_CODE -ne 0 ]; then echo "::error::Command '${{ inputs.migration-command }}' failed! Exit code ($RETURN_CODE)"; exit 2; fi
