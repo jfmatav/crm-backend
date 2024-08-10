@@ -38,11 +38,14 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
-  gem "byebug"
-
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
+  gem "byebug"
 
+  gem 'simplecov', '~> 0.22.0', require: false
+  gem 'simplecov_json_formatter', '~> 0.1.4', require: false
+
+  gem 'rspec-rails', '~> 6.0'
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
