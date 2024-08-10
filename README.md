@@ -45,7 +45,25 @@ Tests for this project have been written to use `rspec`. Additionally, the `simp
 
 ## Using Docker
 
-`TBI`
+First you need to have the latest version of Docker running in your machine. To run the application, run the command:
+
+```bash
+docker compose up
+```
+
+It will pull the images for the Opensearch Postgres and Redis, and build your application. After the application is up and running you can access to the terminal on the backend container running the command:
+
+```bash
+docker exec -it crm-backend-app-1 /bin/bash
+```
+
+This allows you to run commands for setting up the database:
+
+```bash
+rails db:create
+rails db:migrate
+rails db:seed
+```
 
 ## CI/CD
 
