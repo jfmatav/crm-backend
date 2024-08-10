@@ -2,8 +2,7 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
-    byebug
-    JWT.encode(payload, 'agile_monkeys')
+    JWT.encode(payload, ENV.fetch('PASSWORD_KEY', nil))
   end
 
   def decoded_token
@@ -11,7 +10,7 @@ class ApplicationController < ActionController::API
     if header
       token = header.split(" ")[1]
       begin
-        JWT.decode(token, 'agile_monkeys')
+        JWT.decode(token, ENV.fetch('PASSWORD_KEY', nil))
       rescue JWT::DecodeError
         nil
       end
