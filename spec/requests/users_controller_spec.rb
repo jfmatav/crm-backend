@@ -6,7 +6,11 @@ RSpec.describe "UsersControllers", type: :request do
 
   describe "GET /users" do
     context 'when authentication is provided' do
-      pending
+      it 'failing test' do
+        skip
+        get users_path
+        expect(1).to eq 0
+      end
     end
 
     context 'when authentication is NOT provided' do

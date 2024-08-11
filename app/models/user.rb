@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :email, uniqueness: true
 
-  enum role: { basic: 0, admin: 1 }
+  enum :role, [:basic, :admin]
 
   def admin?
     role == "admin"
