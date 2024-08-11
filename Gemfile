@@ -42,6 +42,10 @@ group :development, :test do
   gem "brakeman", require: false
   gem "byebug"
 
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rack-test'
+  gem 'shoulda-matchers', '~> 5.3'
   gem 'simplecov', '~> 0.22.0', require: false
   gem 'simplecov_json_formatter', '~> 0.1.4', require: false
 
