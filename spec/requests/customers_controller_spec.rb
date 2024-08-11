@@ -96,7 +96,7 @@ RSpec.describe "CustomersControllers", type: :request do
     end
   end
 
-  describe "GET /customers" do
+  describe "GET /customer" do
     let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}"} }
     let(:customer) { create(:customer) }
     let(:id) { customer.id }
@@ -135,7 +135,7 @@ RSpec.describe "CustomersControllers", type: :request do
     end
   end
 
-  describe "PUT /customers" do
+  describe "PUT /customer" do
     let(:headers) { {'Authorization' => "Bearer #{get_authentication(editing_user)}", "Content" => "application/json"} }
     let(:user) { create(:user) }
     let(:editing_user) { create(:user) }
@@ -182,7 +182,7 @@ RSpec.describe "CustomersControllers", type: :request do
     end
   end
 
-  describe "DELETE /customers" do
+  describe "DELETE /customer" do
     let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}"} }
     let(:user) { create(:user) }
     let(:customer) { create(:customer) }
