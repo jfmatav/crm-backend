@@ -31,6 +31,7 @@ class CustomersController < ApplicationController
   # PATCH/PUT /customers/1
   def update
     @customer.updated_by_id = current_user.id
+    @customer.photo.attach(params[:photo]) if params[:photo].present?
     if @customer.update(customer_params)
       render json: @customer
     else
