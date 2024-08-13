@@ -58,18 +58,45 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.VGEQEs8dZzZie_v-b_plIAC0-0-_67o31ldvMiv_e2c",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.mEFSvvBjjPhbZb_DvkTRem_I6KCvLWth-vsDH6OiPWc",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"customer\": {\n        \"name\": \"Akechi\",\n        \"surname\": \"Goro\",\n        \"cx_id\": \"0809242\",\n        \"photo_url\": \"https://robohash.org/akechi\" \n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Hikari",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Uematsu",
+									"type": "text"
+								},
+								{
+									"key": "cx_id",
+									"value": "0809241",
+									"type": "text"
+								},
+								{
+									"key": "photo_url",
+									"value": "https://www.robohash.org/hikari",
+									"type": "text"
+								},
+								{
+									"key": "customer",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/Users/llamiro/Desktop/Things/Computación1 copy.png"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/customers",
@@ -87,10 +114,16 @@
 					"name": "Update existing customer",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.UM849lMSPnXzBKdBCNgxj8MCF2L2Z-w5FZ0cOTwppK4",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"customer\": {\n        \"name\": \"Devola\"\n    }\n}",
+							"raw": "{\n    \"name\": \"Kainé\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -98,13 +131,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/customers/7",
+							"raw": "{{url}}/customers/8",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"customers",
-								"7"
+								"8"
 							]
 						}
 					},

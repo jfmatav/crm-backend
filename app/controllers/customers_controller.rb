@@ -16,6 +16,8 @@ class CustomersController < ApplicationController
   # POST /customers
   def create
     @customer = Customer.new(customer_params)
+
+    @customer.photo.attach(params[:photo]) if params[:photo].present?
     @customer.created_by_id = current_user.id
     @customer.updated_by_id = current_user.id
 
@@ -49,6 +51,6 @@ class CustomersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def customer_params
-      params.require(:customer).permit(:name, :surname, :cx_id, :photo_url)
+      params.permit(:name, :surname, :cx_id, :photo_url)
     end
 end

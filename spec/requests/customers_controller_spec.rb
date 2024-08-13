@@ -48,7 +48,7 @@ RSpec.describe "CustomersControllers", type: :request do
 
   describe "POST /customers" do
     let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}", "Content" => "application/json"} }
-    let(:customer_params) { { customer: {name: "a", surname: "b", cx_id: "c"} } }
+    let(:customer_params) { { name: "a", surname: "b", cx_id: "c" } }
 
     before do
       post customers_path, params: customer_params, headers: headers
@@ -140,7 +140,7 @@ RSpec.describe "CustomersControllers", type: :request do
     let(:user) { create(:user) }
     let(:editing_user) { create(:user) }
     let(:customer) { create(:customer, name: "a", surname: "b", cx_id: "c", created_by_id: user.id, updated_by_id: user.id) }
-    let(:customer_params) { { customer: { cx_id: "d" } } }
+    let(:customer_params) { { cx_id: "d" } }
     let(:id) { customer.id }
 
     before do
