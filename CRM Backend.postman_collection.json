@@ -17,7 +17,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.UM849lMSPnXzBKdBCNgxj8MCF2L2Z-w5FZ0cOTwppK4",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
 								"type": "text"
 							}
 						],
@@ -37,15 +37,21 @@
 					"name": "Get full customer information",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/customers/1",
+							"raw": "{{url}}/customers/6",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"customers",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -58,7 +64,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.mEFSvvBjjPhbZb_DvkTRem_I6KCvLWth-vsDH6OiPWc",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
 								"type": "text"
 							}
 						],
@@ -78,11 +84,6 @@
 								{
 									"key": "cx_id",
 									"value": "0809241",
-									"type": "text"
-								},
-								{
-									"key": "photo_url",
-									"value": "https://www.robohash.org/hikari",
 									"type": "text"
 								},
 								{
@@ -117,27 +118,33 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozfQ.mEFSvvBjjPhbZb_DvkTRem_I6KCvLWth-vsDH6OiPWc",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Kainé\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "surname",
+									"value": "Mayá",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/Users/llamiro/Desktop/Things/Screenshot 2024-02-09 at 14.07.59.png"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "{{url}}/customers/8",
+							"raw": "{{url}}/customers/3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"customers",
-								"8"
+								"3"
 							]
 						}
 					},
@@ -147,15 +154,21 @@
 					"name": "Delete an existing customer",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/customers/8",
+							"raw": "{{url}}/customers/7",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"customers",
-								"8"
+								"7"
 							]
 						}
 					},
@@ -170,7 +183,13 @@
 					"name": "List users",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{url}}/users",
 							"host": [
@@ -187,10 +206,16 @@
 					"name": "Create user",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1fQ.aE02clQSTljba1vnY8phkSciAAHRk1xo8GCKhcW8JUs",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n        \"email\": \"emilio@mata.cr\",\n        \"name\": \"Emilio\",\n        \"role\": \"basic\"\n    }\n}",
+							"raw": "{\n    \"user\": {\n        \"email\": \"emilio@mata.cr\",\n        \"name\": \"Emilio\",\n        \"role\": \"basic\",\n        \"password\": \"password123\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -213,10 +238,16 @@
 					"name": "Update user",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1fQ.aE02clQSTljba1vnY8phkSciAAHRk1xo8GCKhcW8JUs",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n        \"email\": \"santiago@mata.cr\",\n        \"name\": \"Santiago\"\n    }\n}",
+							"raw": "{\n    \"user\": {\n        \"email\": \"santiago2@mata.cr\",\n        \"name\": \"Santiago\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,13 +255,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/users/5",
+							"raw": "{{url}}/users/3",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"5"
+								"3"
 							]
 						}
 					},
@@ -240,10 +271,16 @@
 					"name": "Change admin status",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1fQ.aE02clQSTljba1vnY8phkSciAAHRk1xo8GCKhcW8JUs",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n        \"role\": \"basic\"\n    }\n}",
+							"raw": "{\n    \"user\": {\n        \"role\": \"admin\"\n    }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -267,15 +304,21 @@
 					"name": "Delete user",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyfQ.6OFeUbC6SnwkoVzeGHM_v2CI8pSzPtPsOUH7BBmlwlg",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/users/7",
+							"raw": "{{url}}/users/5",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"users",
-								"7"
+								"5"
 							]
 						}
 					},
@@ -290,7 +333,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"jorge@mata.cr\",\n    \"password\": \"password123\"\n}",
+					"raw": "{\n    \"email\": \"marilyn@mata.cr\",\n    \"password\": \"password123\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
