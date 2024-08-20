@@ -53,7 +53,13 @@ Tests for this project have been written to use `rspec`. Additionally, the `simp
 
 ## Using Docker
 
-First you need to have the latest version of Docker running in your machine. To run the application, run the command:
+First you need to have the latest version of Docker running in your machine. Build the images by running:
+
+```bash
+docker build -f Dockerfile.env .
+```
+
+To run the application, run the command:
 
 ```bash
 docker compose up
@@ -68,7 +74,6 @@ docker exec -it crm-backend-app-1 /bin/bash
 This allows you to run commands for setting up the database:
 
 ```bash
-rails db:create
 rails db:migrate
 rails db:seed
 ```
