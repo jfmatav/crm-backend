@@ -16,7 +16,7 @@ gem "puma", ">= 5.0"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem "bcrypt", "~> 3.1.7"
-gem 'dotenv-rails'
+gem "dotenv-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -30,9 +30,9 @@ gem "image_processing", "~> 1.2"
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem "rack-cors"
 
-gem 'jwt', '~> 2.5'
+gem "jwt", "~> 2.5"
 
-gem 'active_model_serializers', '~> 0.10.12'
+gem "active_model_serializers", "~> 0.10.12"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -42,16 +42,14 @@ group :development, :test do
   gem "brakeman", require: false
   gem "byebug"
 
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'rack-test'
-  gem 'shoulda-matchers', '~> 5.3'
-  gem 'simplecov', '~> 0.22.0', require: false
-  gem 'simplecov_json_formatter', '~> 0.1.4', require: false
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rack-test"
+  gem "shoulda-matchers", "~> 5.3"
+  gem "simplecov", "~> 0.22.0", require: false
+  gem "simplecov_json_formatter", "~> 0.1.4", require: false
 
-  gem 'rspec-rails', '~> 6.0'
+  gem "rspec-rails", "~> 6.0"
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
-
-

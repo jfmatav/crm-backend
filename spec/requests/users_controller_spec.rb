@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe "UsersControllers", type: :request do
   let!(:admin) { create(:user, role: "admin") }
   let!(:basic) { create(:user, role: "basic") }
-  let(:admin_headers) { {'Authorization' => "Bearer #{get_authentication(admin)}"} }
-  let(:basic_headers) { {'Authorization' => "Bearer #{get_authentication(basic)}"} }
+  let(:admin_headers) { { 'Authorization' => "Bearer #{get_authentication(admin)}" } }
+  let(:basic_headers) { { 'Authorization' => "Bearer #{get_authentication(basic)}" } }
   let(:headers) { admin_headers }
 
   describe "GET /users" do
@@ -23,12 +23,12 @@ RSpec.describe "UsersControllers", type: :request do
         end
 
         it 'returns the appropriate admin data' do
-          admin_data = response.parsed_body.select{ |user| user["role"] == "admin" }.first
+          admin_data = response.parsed_body.select { |user| user["role"] == "admin" }.first
           expect(admin_data["name"]).to eq admin.name
         end
 
         it 'returns the appropriate basic data' do
-          basic_data = response.parsed_body.select{ |user| user["role"] == "basic" }.first
+          basic_data = response.parsed_body.select { |user| user["role"] == "basic" }.first
           expect(basic_data["name"]).to eq basic.name
         end
       end
@@ -52,10 +52,10 @@ RSpec.describe "UsersControllers", type: :request do
   end
 
   describe "POST /users" do
-    let(:admin_headers) { {'Authorization' => "Bearer #{get_authentication(admin)}", "Content" => "application/json"} }
-    let(:basic_headers) { {'Authorization' => "Bearer #{get_authentication(basic)}", "Content" => "application/json"} }
+    let(:admin_headers) { { 'Authorization' => "Bearer #{get_authentication(admin)}", "Content" => "application/json" } }
+    let(:basic_headers) { { 'Authorization' => "Bearer #{get_authentication(basic)}", "Content" => "application/json" } }
     let(:headers) { admin_headers }
-    let(:user_params) { { user: {name: "a", email: "b", role: "basic", password: "password123"} } }
+    let(:user_params) { { user: { name: "a", email: "b", role: "basic", password: "password123" } } }
 
     before do
       post users_path, params: user_params, headers: headers
@@ -78,7 +78,7 @@ RSpec.describe "UsersControllers", type: :request do
       end
 
       context 'when a required attribute is missing' do
-        let(:user_params) { { user: {name: "a", email: "b"} } }
+        let(:user_params) { { user: { name: "a", email: "b" } } }
 
         it "returns a failure code" do
           expect(response.code).to eq "422"
@@ -150,8 +150,8 @@ RSpec.describe "UsersControllers", type: :request do
   end
 
   describe "PUT /user" do
-    let(:admin_headers) { {'Authorization' => "Bearer #{get_authentication(admin)}", "Content" => "application/json"} }
-    let(:basic_headers) { {'Authorization' => "Bearer #{get_authentication(basic)}", "Content" => "application/json"} }
+    let(:admin_headers) { { 'Authorization' => "Bearer #{get_authentication(admin)}", "Content" => "application/json" } }
+    let(:basic_headers) { { 'Authorization' => "Bearer #{get_authentication(basic)}", "Content" => "application/json" } }
     let(:user) { create(:user, name: "a", email: "b", role: "basic", password: "password123") }
     let(:user_params) { { user: { role: "admin" } } }
     let(:id) { user.id }

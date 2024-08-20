@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "CustomersControllers", type: :request do
   let(:user) { create(:user, role: "admin") }
-  let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}"} }
+  let(:headers) { { 'Authorization' => "Bearer #{get_authentication(user)}" } }
 
   describe "GET /customers" do
     before do
@@ -47,7 +47,7 @@ RSpec.describe "CustomersControllers", type: :request do
   end
 
   describe "POST /customers" do
-    let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}", "Content" => "application/json"} }
+    let(:headers) { { 'Authorization' => "Bearer #{get_authentication(user)}", "Content" => "application/json" } }
     let(:customer_params) { { name: "a", surname: "b", cx_id: "c" } }
 
     before do
@@ -79,7 +79,7 @@ RSpec.describe "CustomersControllers", type: :request do
       end
 
       context 'when a required attribute is missing' do
-        let(:customer_params) { { customer: {name: "a", surname: "b"} } }
+        let(:customer_params) { { customer: { name: "a", surname: "b" } } }
 
         it "returns a failure code" do
           expect(response.code).to eq "422"
@@ -97,7 +97,7 @@ RSpec.describe "CustomersControllers", type: :request do
   end
 
   describe "GET /customer" do
-    let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}"} }
+    let(:headers) { { 'Authorization' => "Bearer #{get_authentication(user)}" } }
     let(:customer) { create(:customer) }
     let(:id) { customer.id }
 
@@ -136,7 +136,7 @@ RSpec.describe "CustomersControllers", type: :request do
   end
 
   describe "PUT /customer" do
-    let(:headers) { {'Authorization' => "Bearer #{get_authentication(editing_user)}", "Content" => "application/json"} }
+    let(:headers) { { 'Authorization' => "Bearer #{get_authentication(editing_user)}", "Content" => "application/json" } }
     let(:user) { create(:user) }
     let(:editing_user) { create(:user) }
     let(:customer) { create(:customer, name: "a", surname: "b", cx_id: "c", created_by_id: user.id, updated_by_id: user.id) }
@@ -183,7 +183,7 @@ RSpec.describe "CustomersControllers", type: :request do
   end
 
   describe "DELETE /customer" do
-    let(:headers) { {'Authorization' => "Bearer #{get_authentication(user)}"} }
+    let(:headers) { { 'Authorization' => "Bearer #{get_authentication(user)}" } }
     let(:user) { create(:user) }
     let(:customer) { create(:customer) }
     let(:id) { customer.id }
