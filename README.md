@@ -24,7 +24,10 @@ To get this project started:
 1. Install dependencies running `bundle install`. You might need to install or upgrade the `bundler` gem
 1. Create and seed the DB (`rails db:migrate` and `rails db:seed`). This will allow you to set up the server and test the functionalities
 1. Run `rails active_storage:install` and `rails db:migrate` again to get the image storage functionalities ready.
+1. Fill out the `.env.template` file with a key for the value present there and rename to `.env.`
 1. The included file called `CRM Backend.postman_collection.json` is a collection of Postman requests that you can use to verify the functionalities. Make sure to first use the `login` request and use the obtained JWT token on the Authorization header for all other requests.
+
+Additional instructions and clarifications have been added to [this document](https://docs.google.com/document/d/1H4x14DBf_6BOV7xZl6X9xdhoTjRWWzWI6aZBVFZScbc/edit).
 
 ## Functionalities
 
