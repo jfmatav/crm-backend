@@ -78,7 +78,7 @@ jobs:
 
       - name: Run migrations
         id: run-task
-        uses: geekcell/github-action-aws-ecs-run-task@v3.1.0
+        uses: geekcell/github-action-aws-ecs-run-task@v4.1.0
         with:
           cluster: ${{ inputs.ecs-cluster }}
           task-definition: ${{ inputs.ecs-task-definition }}
